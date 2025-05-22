@@ -5,7 +5,7 @@ import axios from "axios";
 
 const AssignProjectOwner = () => {
   const [userEmail, setUserEmail] = useState("");
-  const [projectId, setProjectId] = useState("");
+  const [project_id, setProject_id] = useState("");
   const [result, setResult] = useState("");
 
   const handleSubmit = async (e) => {
@@ -13,7 +13,7 @@ const AssignProjectOwner = () => {
 
     try {
       const res = await axios.patch(
-        `http://localhost:5001/projects/${projectId}/assign-to-user`,
+        `http://localhost:5001/projects/${project_id}/assign-to-user`,
         {
           user_email: userEmail,
         }
@@ -31,8 +31,8 @@ const AssignProjectOwner = () => {
         <form onSubmit={handleSubmit}>
           <Input
             placeholder="project id"
-            value={projectId}
-            onChange={(e) => setProjectId(e.target.value)}
+            value={project_id}
+            onChange={(e) => setProject_id(e.target.value)}
             type="text"
           />
           <Input
@@ -45,7 +45,7 @@ const AssignProjectOwner = () => {
         </form>
         {result && (
           <pre>
-            Project with id: {projectId} assigned to user with email:{" "}
+            Project with id: {project_id} assigned to user with email:{" "}
             {userEmail}
           </pre>
         )}

@@ -31,7 +31,7 @@ const AssignTaskToProject = () => {
   return (
     <div className="assign-task-to-project-container">
       <h3>Assign task to project</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           placeholder="task id"
           value={assignData.taskId}
