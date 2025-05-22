@@ -10,9 +10,9 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
-      database: process.env.PGDATABASE,
-      user:     process.env.PGUSER,
-      password: process.env.PGPASSWORD
+      database: 'todo',
+      user:     'postgres',
+      password: 'postgres'
     },
     pool: {
       min: 2,
@@ -24,17 +24,20 @@ module.exports = {
   },
 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-      database: process.env.PGDATABASE,
-      user:     process.env.PGUSER,
-      password: process.env.PGPASSWORD
+      host: 'db',
+      port: 5432,
+      database: 'todo',
+      user:     'postgres',
+      password: 'postgres'
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
+      directory: './migrations',
       tableName: 'knex_migrations'
     }
   },

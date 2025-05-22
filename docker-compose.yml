@@ -1,0 +1,64 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: todo-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: todo-pgadmin
+    user: root
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    volumes:
+      - ./pgadmin_servers.json:/pgadmin4/servers.json
+      - postgres_data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    
+  backend:
+    build: .
+    container_name: todo-backend
+    working_dir: /app/server
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: todo
+      PGHOST: db
+      PGPORT: 5432
+      NODE_ENV: development
+    volumes:
+      - .:/app
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./client
+    container_name: todo-frontend
+    environment:
+      - NODE_ENV=development
+      - NODE_OPTIONS=--openssl-legacy-provider
+    working_dir: /app
+    volumes:
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

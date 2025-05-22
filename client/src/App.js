@@ -36,14 +36,31 @@ class App extends Component {
       request.body = JSON.stringify({ title, order, completed })
 
     this.setState({ lastRequest: `${method} at /${id}`});
+
+    let baseUrl = process.env.NODE_ENV === "development" ? 'http://localhost:5001' : '';
+    let endpoint = id ? `${baseUrl}/${id}` : `${baseUrl}`;
     // Code smells, but the setup of todo-backend with get('/') returning a list of todos requires
     // that we directly hit localhost instead of being able to rely on the proxy.
     // We can only proxy non-root gets.
     let response;
-    if (process.env.NODE_ENV === "development" && method === "GET" && id === '') {
-      response = await fetch('http://localhost:5000/', request);
-    } else {
-      response = await fetch(`/${id}`, request);
+    // if (process.env.NODE_ENV === "development" && method === "GET" && id === '') {
+    //   response = await fetch('http://localhost:5001/', request);
+    // } else {
+    //   response = await fetch(`/${id}`, request);
+    // }
+
+    try {
+      response = await fetch(endpoint, request);
+    } catch(err) {
+      console.error(`Faild to fetch ${endpoint}`, err);
+      this.setState({ response: [{ status: 0, message: err.message }] });
+      return;
+    }
+
+    if (!response || !response.ok) {
+      const body = await response.text();
+      this.setState({ response: [{ status: response?.status || 0, message: body }] });
+      return;
     }
 
     const contentType = response.headers.get('content-type');
@@ -55,11 +72,11 @@ class App extends Component {
       body = await response.text();
     }
 
-    if (response.status !== 200) {
-      console.log(body);
-      this.setState({ response: [{ status: response.status, message: body }] });
-      return;
-    }
+    // if (response.status !== 200) {
+    //   console.log(body);
+    //   this.setState({ response: [{ status: response.status, message: body }] });
+    //   return;
+    // }
 
     // Ensures formart of [{}, {}, {}]
     if (!Array.isArray(body))
