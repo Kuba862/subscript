@@ -29,6 +29,9 @@ async function assignProjectToUser(req, res) {
     const user = await users.findByEmail(user_email);
     if(!user) return res.status(404).send("User not found");
 
+    console.log("project_id", project_id);
+    console.log("user new", user);
+
     const project = await projects.get(project_id);
     if (!project) return res.status(404).send("Project not found");
 

@@ -27,7 +27,7 @@ app.patch('/todos/:id/assign', assignTask);
 app.post('/projects', createProject);
 app.get('/projects/:id/tasks', routes.getTasksForProject);
 app.patch('/todos/:id/assign-to-project', assignToProject);
-app.patch('/projects/:id/assign-to-user', assignProjectToUser);
+app.patch('/projects/:project_id/assign-to-user', assignProjectToUser);
 
 // comment routes
 app.post('/todos/:id/comments', addComment);

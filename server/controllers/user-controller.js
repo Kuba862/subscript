@@ -37,7 +37,7 @@ async function getUserSummary(req, res) {
 
     const directProjects = await knex('projects').where('projects.owner_id', user_id);
 
-    const taskProjects = await knex('projects').distinct('projects.id', 'projects.name').join("todos", "projects.id", "todos.projects_id").where('todos.assignee_id', user_id);
+    const taskProjects = await knex('projects').distinct('projects.id', 'projects.name').join("todos", "projects.id", "todos.project_id").where('todos.assignee_id', user_id);
 
     const mergedProjects = [...directProjects, ...taskProjects.filter(p => !directProjects.find(dp => dp.id === p.id))];
 
