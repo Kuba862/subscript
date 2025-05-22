@@ -57,13 +57,19 @@ function addErrorReporting(func, message) {
     }
 }
 
+async function getTasksForProject(req, res) {
+  const tasks = await todos.getByProjectId(req.params.id, req.body);
+  return res.send(tasks);
+}
+
 const toExport = {
     getAllTodos: { method: getAllTodos, errorMessage: "Could not fetch all todos" },
     getTodo: { method: getTodo, errorMessage: "Could not fetch todo" },
     postTodo: { method: postTodo, errorMessage: "Could not post todo" },
     patchTodo: { method: patchTodo, errorMessage: "Could not patch todo" },
     deleteAllTodos: { method: deleteAllTodos, errorMessage: "Could not delete all todos" },
-    deleteTodo: { method: deleteTodo, errorMessage: "Could not delete todo" }
+    deleteTodo: { method: deleteTodo, errorMessage: "Could not delete todo" },
+    getTasksForProject: { method: getTasksForProject, errorMessage: "Could not fetch tasks for project" }
 }
 
 for (let route in toExport) {

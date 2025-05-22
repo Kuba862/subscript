@@ -29,11 +29,16 @@ async function clear() {
     return knex('todos').del().returning('*');
 }
 
+async function getByProjectId(projectId) {
+    return knex('todos').where({ project_id: projectId })
+}
+
 module.exports = {
     all,
     get,
     create,
     update,
     delete: del,
-    clear
+    clear,
+    getByProjectId
 }
