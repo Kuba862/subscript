@@ -1,6 +1,6 @@
 const app = require('./server-config.js');
 const routes = require('./server-routes.js');
-const { createUser, searchUser } = require('./controllers/user-controller');
+const { createUser, searchUser, getUserSummary } = require('./controllers/user-controller');
 const { assignTask } = require('./controllers/task-controller');
 const { createProject, assignToProject, assignProjectToUser } = require('./controllers/project-controller');
 const { addComment, getComments } = require('./controllers/comment-controller');
@@ -19,7 +19,7 @@ app.delete('/:id', routes.deleteTodo);
 // user routes
 app.post('/users', createUser);
 app.post('/users/search', searchUser);
-
+app.get('/users/:id/summary', getUserSummary);
 // task routes
 app.patch('/todos/:id/assign', assignTask);
 
