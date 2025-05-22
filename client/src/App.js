@@ -9,6 +9,7 @@ import SearchUser from './components/SearchUser/SearchUser';
 import CreateAProject from './components/CreateAProject/CreateAProject';
 import AssignTaskToUser from './components/AssignTaskToUser/AssignTaskToUser';
 import AssignProjectOwner from './components/AssignProjectOwner/AssignProjectOwner';
+import AssignTaskToProject from './components/AssignTaskToProject/AssignTaskToProject';
 class App extends Component {
   state = {
     method: 'GET',
@@ -115,7 +116,7 @@ class App extends Component {
         <CreateAProject />
         <AssignTaskToUser />
         <AssignProjectOwner />
-        
+        <AssignTaskToProject />
         <form onSubmit={this.handleSubmit}>
           <div>
             <h3>Send to Server:</h3>
