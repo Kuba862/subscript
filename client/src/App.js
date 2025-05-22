@@ -4,6 +4,10 @@ import logo from './logo.svg';
 
 import './App.css';
 
+import AddUser from './components/AddUser/AddUser';
+import SearchUser from './components/SearchUser/SearchUser';
+import CreateAProject from './components/CreateAProject/CreateAProject';
+
 class App extends Component {
   state = {
     method: 'GET',
@@ -99,17 +103,19 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Powered by React
           </p>
-        </header>
-
+        </header> */}
+        <AddUser />
+        <SearchUser />
+        <CreateAProject />
         <form onSubmit={this.handleSubmit}>
-          <p>
+          <div>
             <h3>Send to Server:</h3>
-          </p>
+          </div>
           <select value={method} onChange={this.changeMethod}>
             <option value="GET">Get</option>
             <option value="POST">Post</option>
