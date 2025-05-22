@@ -3,6 +3,8 @@ const routes = require('./server-routes.js');
 const { createUser, searchUser } = require('./controllers/user-controller');
 const { assignTask } = require('./controllers/task-controller');
 const { createProject, assignToProject, assignProjectToUser } = require('./controllers/project-controller');
+const { addComment, getComments } = require('./controllers/comment-controller');
+
 const port = process.env.PORT || 5001;
 
 app.get('/', routes.getAllTodos);
@@ -26,6 +28,10 @@ app.post('/projects', createProject);
 app.get('/projects/:id/tasks', routes.getTasksForProject);
 app.patch('/todos/:id/assign-to-project', assignToProject);
 app.patch('/projects/:id/assign-to-user', assignProjectToUser);
+
+// comment routes
+app.post('/todos/:id/comments', addComment);
+app.get('/todos/:id/comments', getComments);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => console.log(`Listening on port ${port}`));
